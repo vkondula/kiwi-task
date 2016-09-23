@@ -219,9 +219,9 @@ def main(args):
 
 if __name__ == "__main__":
     args = parse_args()
-#    try:
-    retval = main(args)
-#   except Exception as e:
-#        sys.stderr.write(e.message)
-#        sys.exit(1)
+    try:
+        retval = main(args)
+    except Exception as e:
+        sys.stderr.write(e.message)
+        sys.exit(1)
     sys.exit(retval)
