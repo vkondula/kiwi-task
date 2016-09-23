@@ -181,11 +181,11 @@ class FlightSearcher(object):
         if len(self.path) < 3:
             return True
         current = self.path[-1][0]
-        last = self.path[-2][0]
-        for counter in range(1, len(self.path) - 1):
+        previous = self.path[-2][0]
+        for i, airport in enumerate(self.path[1:-1], start=1):
             if (
-                self.path[counter][0] == current and
-                self.path[counter-1][0] == last
+                airport[0] == current and
+                self.path[i-1][0] == previous
             ):
                 return False
         return True
