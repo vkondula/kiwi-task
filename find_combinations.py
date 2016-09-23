@@ -137,7 +137,7 @@ class FlightSearcher(object):
                 while len(self.path) >= depth:
                     self.path.pop()
                 self.path.append((airport, f_number))
-                if not self.verify_path():
+                if not self.verify_path([a[0] for a in self.path]):
                     continue
                 for f in self.get_next_flights(airport, arrival):
                     open_stack.append(
@@ -176,17 +176,14 @@ class FlightSearcher(object):
                 flights.append(f)
         return flights
 
-    def verify_path(self):
+    def verify_path(self, path):
         """Check for repeating segments"""
-        if len(self.path) < 3:
+        if len(path) < 3:
             return True
-        current = self.path[-1][0]
-        previous = self.path[-2][0]
-        for i, airport in enumerate(self.path[1:-1], start=1):
-            if (
-                airport[0] == current and
-                self.path[i-1][0] == previous
-            ):
+        current = path[-1]
+        previous = path[-2]
+        for i, airport in enumerate(path[1:-1], start=1):
+            if (airport == current and path[i-1] == previous):
                 return False
         return True
 
